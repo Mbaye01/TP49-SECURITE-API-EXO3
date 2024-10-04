@@ -1,26 +1,22 @@
+// index.js
+
 const express = require("express");
-// import bodyParser from "body-parser";
+const helmet = require("helmet"); // Pour sécuriser les en-têtes HTTP
+const cors = require("cors"); // Pour gérer les requêtes cross-origin
+const apiRoutes = require("./routes/app"); // Importer les routes API
+
 const app = express();
-const port = 3000;
+const port = 3010;
 
-const helmet = require("helmet");
-app.use(helmet());
+// Middleware globaux
+app.use(helmet()); // Utilisation de Helmet pour sécuriser les en-têtes HTTP
+app.use(cors()); // Utilisation de CORS pour permettre des requêtes d'autres domaines
+app.use(express.json()); // Pour parser les requêtes JSON
 
-const cors = require("cors");
-app.use(
-  cors({
-    origin: "https://cors.com", // autorise uniquement ce domaine
-  })
-);
+// Routes
+app.use("/api/private-data", apiRoutes); // Toutes les routes API commenceront par /api
 
-app.get("/api/hello", (req, res) => {
-  res.send("Hello world");
-});
-
-app.get("/api/hello", (req, res) => {
-  res.send("Hello World!");
-});
-
+// Démarrer le serveur
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Server running on http://localhost:${port}`);
 });
