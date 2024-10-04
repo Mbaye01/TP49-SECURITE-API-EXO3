@@ -8,7 +8,7 @@ router.get("/hello", (req, res) => {
 });
 
 // Route privée sécurisée par la clé API
-router.get("/api/private-data", apiKeyAuth, (req, res) => {
+router.get("/private-data", apiKeyAuth, (req, res) => {
   res.json({ data: "This is private data" });
 });
 
